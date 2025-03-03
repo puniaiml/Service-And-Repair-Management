@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>LOGIN</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
+
+        body {
+            background-image: linear-gradient(116deg, rgba(232, 232, 232, 0.03) 0%, rgba(232, 232, 232, 0.03) 10%,rgba(14, 14, 14, 0.03) 10%, rgba(14, 14, 14, 0.03) 66%,rgba(232, 232, 232, 0.03) 66%, rgba(232, 232, 232, 0.03) 72%,rgba(44, 44, 44, 0.03) 72%, rgba(44, 44, 44, 0.03) 81%,rgba(51, 51, 51, 0.03) 81%, rgba(51, 51, 51, 0.03) 100%),linear-gradient(109deg, rgba(155, 155, 155, 0.03) 0%, rgba(155, 155, 155, 0.03) 23%,rgba(30, 30, 30, 0.03) 23%, rgba(30, 30, 30, 0.03) 63%,rgba(124, 124, 124, 0.03) 63%, rgba(124, 124, 124, 0.03) 73%,rgba(195, 195, 195, 0.03) 73%, rgba(195, 195, 195, 0.03) 84%,rgba(187, 187, 187, 0.03) 84%, rgba(187, 187, 187, 0.03) 100%),linear-gradient(79deg, rgba(254, 254, 254, 0.03) 0%, rgba(254, 254, 254, 0.03) 27%,rgba(180, 180, 180, 0.03) 27%, rgba(180, 180, 180, 0.03) 33%,rgba(167, 167, 167, 0.03) 33%, rgba(167, 167, 167, 0.03) 34%,rgba(68, 68, 68, 0.03) 34%, rgba(68, 68, 68, 0.03) 63%,rgba(171, 171, 171, 0.03) 63%, rgba(171, 171, 171, 0.03) 100%),linear-gradient(109deg, rgba(71, 71, 71, 0.03) 0%, rgba(71, 71, 71, 0.03) 3%,rgba(97, 97, 97, 0.03) 3%, rgba(97, 97, 97, 0.03) 40%,rgba(40, 40, 40, 0.03) 40%, rgba(40, 40, 40, 0.03) 55%,rgba(5, 5, 5, 0.03) 55%, rgba(5, 5, 5, 0.03) 73%,rgba(242, 242, 242, 0.03) 73%, rgba(242, 242, 242, 0.03) 100%),linear-gradient(271deg, rgba(70, 70, 70, 0.03) 0%, rgba(70, 70, 70, 0.03) 11%,rgba(178, 178, 178, 0.03) 11%, rgba(178, 178, 178, 0.03) 23%,rgba(28, 28, 28, 0.03) 23%, rgba(28, 28, 28, 0.03) 72%,rgba(152, 152, 152, 0.03) 72%, rgba(152, 152, 152, 0.03) 86%,rgba(43, 43, 43, 0.03) 86%, rgba(43, 43, 43, 0.03) 100%),linear-gradient(90deg, rgb(27, 27, 27),rgb(1, 1, 1));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: "Montserrat", sans-serif;
+            height: 75vh;
+        }
+
+        h1 {
+            color:white;
+            font-weight: bold;
+            font-size: 4rem;
+            margin: 3%;
+        }
+
+        p {
+            font-size: 14px;
+            font-weight: 100;
+            line-height: 20px;
+            letter-spacing: 0.5px;
+            margin: 20px 0 30px;
+        }
+
+        button {
+            border-radius: 20px;
+            border: 1px solid #754ef9;
+            background-color: #754ef9;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 12px 45px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-align: center;
+            margin: 25px;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        .forms {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-top: 20px;
+            flex-direction: row; /* Default: row */
+        }
+
+        /* Media query for mobile devices */
+        @media only screen and (max-width: 600px) {
+            .forms {
+                flex-direction: column; /* Change to column for screens smaller than 600px */
+            }
+        }
+
+        /* Style for the anchor tag within the button */
+        button a {
+            text-decoration: none; /* Remove underline */
+            color: #ffffff !important; /* Set color to white */
+        }
+
+        /* Remove underline on hover for anchor tags within buttons */
+        button a:hover {
+            text-decoration: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Login Form</h1>
+        <div class="forms" id="container">
+            <button id="departmentBtn"><a href="http://127.0.0.1:5000/user_login"> User </a></button>
+            <button id="serviceProviderBtn"><a href="http://127.0.0.1:5000/admin_login">Service Provider</a></button>
+        </div>
+    </div>
+</body>
+</html>

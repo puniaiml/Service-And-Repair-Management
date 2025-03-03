@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      border: 1px solid #ddd;
+    }
+    
+    th, td {
+      text-align: left;
+      padding: 16px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    /* Additional styles from the previous HTML */
+    .container {
+      max-width: 1400px;
+      margin: 10px auto;
+      background-color: #fff;
+      padding: 50px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    hr {
+      border: 1px solid #ccc;
+      margin: 20px 0;
+    }
+
+    input[type="text"], input[type="date"], select {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 20px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    button.requestbtn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    button.requestbtn:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+<div ng-app="itmApp" ng-controller="itmCtrl">
+  <form action="/action_page.php">
+    <div class="container">
+      <h1>Service Request Form</h1>
+      <hr>
+
+      <label for="ptype"><b>Select Item to be Serviced :</b></label><br>
+      <select id ="ptype"></select><br>
+
+      <label for="pdes"><b>Item Problem Description:</b></label><br>
+      <input type="text" placeholder="Enter Description" name="pdes" id="pdes" required><br>
+
+      <label for="rdate"><b>Date of Request:</b></label><br>
+      <input type="date" placeholder="Request Date" name="rdate" id="rdate" required><br>
+
+      <button type="button" class="requestbtn" id="itemrequestbtn">Insert</button><br>
+
+      <div name="requestshow" id="requestshow"></div>
+    </div>
+  </form>
+</div>
+
+<script>
+  $(document).ready(function() {
+    loadreq();
+    loaditemnames();
+
+    function loaditemnames() {
+      $.ajax({
+        url: 'http://127.0.0.1:5000/itemnames',
+        type: 'POST',
+        success: function(data) {
+          $('#ptype').html(data);
+        }
+      });
+    }
+
+    function loadreq() {
+      $.ajax({
+        url: 'http://127.0.0.1:5000/requestshow',
+        type: 'POST',
+        success: function(data) {
+          $('#requestshow').html(data);
+        }
+      });
+    }
+
+    $("#itemrequestbtn").click(function() {
+      var ptype = $('#ptype').val();
+      var pdes = $('#pdes').val();
+      var rdate = $('#rdate').val();
+
+      $.ajax({
+        url: 'http://127.0.0.1:5000/requestregister',
+        type: 'POST',
+        data: { ptype: ptype, pdes: pdes, rdate: rdate },
+        success: function(data) {
+          alert(data);
+          loadreq();
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

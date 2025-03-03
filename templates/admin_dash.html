@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Provider Page</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    />
+    <link rel="stylesheet" href="../static/css/user-dashboard.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+      #wrenchIcon {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo-details">
+        <i class="bx bx-wrench" id="wrenchIcon"></i>
+        <div class="logo_name">S R M</div>
+        <i class="bx bx-menu" id="btn" onclick="toggleWrench()"></i>
+      </div>
+      <ul class="nav-list">
+        <li>
+          <a id="i1">
+            <i class="bx bx-user"></i>
+            <span class="links_name">Provider</span>
+          </a>
+          <span class="tooltip">Provider</span>
+        </li>
+        <li>
+          <a id="i2">
+            <i class="bx bx-grid-alt"></i>
+            <span class="links_name">Staff</span>
+          </a>
+          <span class="tooltip">Staff</span>
+        </li>
+        <li>
+          <a id="i3">
+            <i class="bx bx-chat"></i>
+            <span class="links_name">Service Request</span>
+          </a>
+          <span class="tooltip">Service Request</span>
+        </li>
+        <li>
+          <a id="i4">
+            <i class="bx bx-pie-chart-alt-2"></i>
+            <span class="links_name">Request Status</span>
+          </a>
+          <span class="tooltip">Request Status</span>
+        </li>
+
+        <li class="profile">
+          <!-- <div class="profile-details">
+                    <img src="https://drive.google.com/uc?export=view&id=1ETZYgPpWbbBtpJnhi42_IR3vOwSOpR4z" alt="profileImg" />
+                    <div class="name_job">
+                        <div class="name">#name</div>
+                        <div class="job">#User</div>
+                    </div>
+                </div> -->
+          <a href="http://127.0.0.1:5000/">
+            <i class="bx bx-log-out" id="log_out">logOut</i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <section class="home-section">
+      <div class="text">Provider Dashboard</div>
+      <div id="pageContent"></div>
+      
+    </section>
+    <script src="../static/js/user-dashboard.js"></script>
+    <script>
+      function toggleWrench() {
+        var wrenchIcon = document.getElementById("wrenchIcon");
+
+        // Toggle the display property of the wrench icon
+        if (
+          wrenchIcon.style.display === "none" ||
+          wrenchIcon.style.display === ""
+        ) {
+          wrenchIcon.style.display = "inline-block"; // or any other desired display property
+        } else {
+          wrenchIcon.style.display = "none";
+        }
+      }
+
+      function loadPage(pageURL) {
+        // Fetch the content of the page
+        fetch(pageURL)
+          .then((response) => response.text())
+          .then((data) => {
+            // Set the content of the pageContent container
+            document.getElementById("pageContent").innerHTML = data;
+          })
+          .catch((error) => console.error("Error fetching page:", error));
+      }
+    </script>
+    <script>
+      $(document).ready(function () {
+        $("#i1").click(function () {
+          $.ajax({
+            url: "http://127.0.0.1:5000/provider",
+            type: "POST",
+            data: { uname: "" },
+            success: function (data) {
+              $("#pageContent").html(data);
+            },
+          });
+        });
+        $("#i2").click(function () {
+            $.ajax({
+              url: "http://127.0.0.1:5000/staff",
+              type: "POST",
+              data: { uname: "" },
+              success: function (data) {
+                $("#pageContent").html(data);
+              },
+            });
+          });
+
+          $("#i3").click(function () {
+            $.ajax({
+              url: "http://127.0.0.1:5000/srq",
+              type: "POST",
+              data: { uname: "" },
+              success: function (data) {
+                $("#pageContent").html(data);
+              },
+            }); 
+          });
+
+          $("#i4").click(function () {
+            $.ajax({
+              url: "http://127.0.0.1:5000/service",
+              type: "POST",
+              data: { uname: "" },
+              success: function (data) {
+                $("#pageContent").html(data);
+              },
+            });
+          });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      border: 1px solid #ddd;
+    }
+    
+    th, td {
+      text-align: left;
+      padding: 16px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    /* Additional styles from the previous HTML */
+    .container {
+      max-width: 1400px;
+      margin: 10px auto;
+      background-color: #fff;
+      padding: 50px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    hr {
+      border: 1px solid #ccc;
+      margin: 20px 0;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 20px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    button.registerbtn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    button.registerbtn:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <form action="/action_page.php">
+    <div class="container">
+      <h1>Department</h1>
+      <hr>
+
+      <label for="rname"><b>Department Name:</b></label>
+      <input type="text" placeholder="Enter Department Name" name="deptname" id="deptname" required><br><br>
+  
+      <label for="rdes"><b>Department Location:</b></label>
+      <input type="text" placeholder="Enter Department Location" name="dloc" id="dloc"  required>
+      <br><br>
+      <button type="button" class="registerbtn" id="deptregisterbtn">Insert</button>
+      
+      <div name="dshow" id="dshow"></div>
+    </div>
+  </form>
+
+  <script>
+    $(document).ready(function() {
+      loaddepartments();
+      
+      function loaddepartments() {
+        $.ajax({
+          url: 'http://127.0.0.1:5000/deptshow',
+          type: 'POST',
+          success: function(data) {
+            $('#dshow').html(data);
+          }
+        });
+      }
+
+      $("#deptregisterbtn").click(function() {
+        var deptname = $('#deptname').val();
+        var dloc = $('#dloc').val();
+        
+        $.ajax({
+          url: 'http://127.0.0.1:5000/deptregister',
+          type: 'POST',
+          data: { deptname: deptname, dloc: dloc },
+          success: function(data) {
+            alert(data);
+            loaddepartments();
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

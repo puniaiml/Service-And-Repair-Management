@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 100%;
+      margin: 10px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 20px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    button.servicebtn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    button.servicebtn:hover {
+      background-color: #45a049;
+    }
+
+    #serviceshow {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      border: 1px solid #ddd;
+      table-layout: auto;
+    }
+    
+    th, td {
+      text-align: left;
+      padding: 16px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    /* Responsive layout */
+    @media screen and (max-width: 600px) {
+      .container {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div ng-app="itmApp" ng-controller="itmCtrl">
+    <form action="/action_page.php">
+      <div class="container">
+        <h1>Update the Service form</h1>
+        <hr>
+        <label for="istype">Select Item problem to be Serviced:</label>
+        <select id="istype"></select>
+
+        <label for="sttype">Select Staff to be Worked:</label>
+        <select id="sttype"></select>
+
+        <label for="sdes">Service Description:</label>
+        <select id="sdes">
+          <option label="Completed">Completed (Item Service Completed)</option>
+          <option label="Working">Working (Item Service On-going)</option>
+          <option label="Rejected">Service Rejected (Item Service Rejected)</option>
+        </select>
+
+        <label for="sdate">Date of Service: </label>
+        <input type="date" placeholder="Service Date" name="sdate" id="sdate" required>
+
+        <label for="service_cost"><b>Enter Item Service Cost: </b></label>
+        <input type="number" placeholder="Enter Cost" name="service_cost" id="service_cost" required><br>
+
+        <button type="button" class="servicebtn" id="servicebtn">Insert</button>
+
+        <div name="serviceshow" id="serviceshow"></div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      loadservice();
+      loadrqitemnames();
+      loadstaffnames();
+
+      function loadrqitemnames() {
+        $.ajax({
+          url: 'http://127.0.0.1:5000/rqitemnames',
+          type: 'POST',
+          success: function(data) {
+            $('#istype').html(data);
+          }
+        });
+      }
+
+      function loadstaffnames() {
+        $.ajax({
+          url: 'http://127.0.0.1:5000/staffnames',
+          type: 'POST',
+          success: function(data) {
+            $('#sttype').html(data);
+          }
+        });
+      }
+
+      function loadservice() {
+        $.ajax({
+          url: 'http://127.0.0.1:5000/serviceshow',
+          type: 'POST',
+          success: function(data) {
+            $('#serviceshow').html(data);
+          }
+        });
+      }
+
+      $("#servicebtn").click(function() {
+        var istype = $('#istype').val();
+        var sttype = $('#sttype').val();
+        var sdes = $('#sdes').val();
+        var sdate = $('#sdate').val();
+        var service_cost = $('#service_cost').val();
+
+        $.ajax({
+          url: 'http://127.0.0.1:5000/serviceregister',
+          type: 'POST',
+          data: {
+            istype: istype,
+            sttype: sttype,
+            sdes: sdes,
+            sdate: sdate,
+            service_cost: service_cost
+          },
+          success: function(data) {
+            alert(data);
+            loadservice();
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    
+
+    /* Additional styles from the previous HTML */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 10px auto;
+      background-color: #fff;
+      padding: 50px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    hr {
+      border: 1px solid #ccc;
+      margin: 20px 0;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 20px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    #statusshow {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      border: 1px solid #ddd;
+      table-layout:auto;
+    }
+    
+    th, td {
+      text-align: left;
+      padding: 16px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+<div ng-app="itmApp" ng-controller="itmCtrl">
+  <form action="/action_page.php">
+    <div class="container" readonly>
+      <h1>Service Status Form from the Provider</h1>
+      <hr>
+      <div name="statusshow" id="statusshow" readonly></div>
+    </div>
+  </form>
+</div>
+
+<script>
+$(document).ready(function() {
+  loadstatus();
+
+  function loadstatus() {
+    $.ajax({
+      url: 'http://127.0.0.1:5000/statusshow',
+      type: 'POST',
+      success: function(data) {
+        $('#statusshow').html(data);
+      }
+    });
+  }
+});
+</script>
+</body>
+</html>

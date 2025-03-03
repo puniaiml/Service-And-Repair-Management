@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 10px auto;
+      background-color: #fff;
+      padding: 50px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    hr {
+      border: 1px solid #ccc;
+      margin: 20px 0;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"],
+    input[type="address"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 20px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    button.registerbtn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    button.registerbtn:hover {
+      background-color: #45a049;
+    }
+
+    #stshow {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      border: 1px solid #ddd;
+    }
+    
+    th, td {
+      text-align: left;
+      padding: 16px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <form action="/action_page.php">
+    <div class="container">
+      <h1>Staff Details</h1>
+      <hr />
+
+      <label for="sname"><b>Staff Name:</b></label>
+      <input type="text" placeholder="Enter Staff Name" name="sname" id="sname" required>
+
+      <label for="sdes"><b>Staff Designation:</b></label>
+      <input type="text" placeholder="Enter Staff Designation" name="sdes" id="sdes" required>
+
+      <label for="sphone"><b>Staff Phone:</b></label>
+      <input type="tel" placeholder="Enter Staff Phone" name="sphone" id="sphone" required>
+
+      <label for="semail"><b>Staff Email:</b></label>
+      <input type="email" placeholder="Enter Staff Email" name="semail" id="semail" required>
+
+      <label for="address"><b>Staff Address:</b></label>
+      <input type="address" placeholder="Enter Staff Address" name="address" id="address" required>
+
+      <button type="button" class="registerbtn" id="staffregisterbtn">Insert</button>
+
+      <div name="stshow" id="stshow"></div>
+    </div>
+  </form>
+
+  <script>
+    $(document).ready(function() {
+      loadStaffs();
+
+      function loadStaffs() {
+        $.ajax({
+          url: 'http://127.0.0.1:5000/stshow',
+          type: 'POST',
+          success: function(data) {
+            $('#stshow').html(data);
+          }
+        });
+      }
+
+      $("#staffregisterbtn").click(function() {
+        var sname = $('#sname').val();
+        var sdes = $('#sdes').val();
+        var sphone = $('#sphone').val();
+        var semail = $('#semail').val();
+        var address = $('#address').val();
+
+        $.ajax({
+          url: 'http://127.0.0.1:5000/staffregister',
+          type: 'POST',
+          data: {
+            sname: sname,
+            sdes: sdes,
+            sphone: sphone,
+            semail: semail,
+            address: address
+          },
+          success: function(data) {
+            alert(data);
+            loadStaffs();
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>User Sign in & Sign up Form</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../static/css/user-login.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <!-- partial:index.partial.html -->
+    <div class="container" id="container">
+      <div class="form-container sign-up-container">
+        <form action="#">
+          <h1>Create Account</h1></br>
+          <!--<div class="social-container">
+            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+            <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+          </div>-->
+          <span>Use your email for registration</span></br>
+          <input type="text" placeholder="Name" id="uname" />
+          <input type="email" placeholder="Email" id="email" />
+          <input type="password" placeholder="Password" id="pwd" /></br>
+          <button id="sbtn">Sign Up</button>
+        </form>
+      </div>
+      <div class="form-container sign-in-container">
+        <form action="#">
+          <h1>Sign in</h1></br>
+          <!--<div class="social-container">
+            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+            <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+          </div>-->
+          <span>Use your account</span></br>
+          <input type="email" placeholder="Gmail" id="email1" />
+          <input type="password" placeholder="Password" id="pwd1" /></br>
+          <!--<a href="#">Forgot your password?</a>-->
+          <button type="button" id="btn">Sign In</button>
+        </form>
+      </div>
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>Welcome Back!</h1>
+            <p>
+              To keep connected with us please login with your personal info
+            </p>
+            <button class="ghost" id="signIn">Sign In</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>Hello !</h1>
+            <p>Enter your personal details and start journey with us</p>
+            <button class="ghost" id="signUp">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- partial -->
+    <!--script src="./static/js/user-login.js"></script-->
+    <script>
+      $(document).ready(function () {
+        $("#signUp").click(function () {
+          $("#container").addClass("right-panel-active");
+        });
+
+        $("#signIn").click(function () {
+          $("#container").removeClass("right-panel-active");
+        });
+
+        $("#sbtn").click(function () {
+          var uname = $("#uname").val();
+          var email = $("#email").val();
+          var pwd = $("#pwd").val();
+
+          $.ajax({
+            url: "http://127.0.0.1:5000/signup",
+            type: "POST",
+            data: { uname: uname, pwd: pwd, email: email },
+            success: function (data) {
+              if (data === "success") {
+                alert("Registration successful!");
+                window.location.href = "http://127.0.0.1:5000/user_login";
+              } else {
+                alert(data); // Display error message (e.g., "Email already exists")
+              }
+            },
+          });
+        });
+
+        $("#btn").click(function () {
+          var email = $("#email1").val();
+          var pwd = $("#pwd1").val();
+          <!--alert(email+" "+pwd)-->
+          $.ajax({
+            url: "http://127.0.0.1:5000/signin",
+            type: "POST",
+            data: { email: email, pwd: pwd },
+            success: function (data) {
+              if (data === "success") {
+                alert("Successfully Logged In");
+                window.location.href = "http://127.0.0.1:5000/user_dash";
+              } else {
+                alert("Invalid Username or Password");
+              }
+            },
+            error: function () {
+              alert("An error occurred during login. Please try again later.");
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
