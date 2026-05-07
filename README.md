@@ -19,7 +19,7 @@ A full-stack web application to manage service requests, inventory, staff, and s
 - 📝 Service Requests  
 - 👨‍🔧 Provider Dashboard  
 - 👨‍💼 Staff Management  
-- 📊 Service Tracking  
+- 📊 Service Tracking
 
 ---
 
